@@ -1,3 +1,7 @@
+// scripts.js
+import { db } from './firebaseConfig.js';
+import { collection, addDoc, query, onSnapshot } from "firebase/firestore";
+
 document.addEventListener('DOMContentLoaded', function() {
     const saveButton = document.getElementById('save-button');
     if (saveButton) {
@@ -59,122 +63,128 @@ function compressAndPreviewImage(file, elementId, callback) {
 }
 
 // Fonction pour ajouter un nom complet aux données et les sauvegarder
-function addFullNameAndSave(data) {
+async function addFullNameAndSave(data) {
     const timestamp = new Date().toLocaleString();  // Obtenir l'horodatage actuel
     const emplacement = document.getElementById('emplacement').value || 'Unknown';
     const denomination = document.getElementById('denomination').value || 'Unnamed';
     const fullName = `${timestamp} - ${emplacement} - ${denomination}`;  // Créer le nom complet
     data['fullName'] = fullName;  // Ajouter le nom complet aux données
 
-    // Récupérer les diagnostics sauvegardés du localStorage, ou initialiser un tableau vide
-    let savedDiagnostics = JSON.parse(localStorage.getItem('savedDiagnostics')) || [];
-    savedDiagnostics.push(data);  // Ajouter les nouvelles données
-    localStorage.setItem('savedDiagnostics', JSON.stringify(savedDiagnostics));  // Sauvegarder dans le localStorage
-    alert(`Diagnostic sauvegardé sous le nom: ${fullName}`);  // Afficher une alerte de confirmation
+    try {
+        // Ajouter les données à Firestore
+        await addDoc(collection(db, "datas"), data);
+        alert(`Diagnostic sauvegardé sous le nom: ${fullName}`);  // Afficher une alerte de confirmation
+    } catch (e) {
+        console.error("Erreur lors de la sauvegarde du diagnostic : ", e);
+    }
 }
 
 // Fonction pour afficher les diagnostics sauvegardés
 function displaySavedDiagnostics() {
-    // Récupérer les diagnostics sauvegardés du localStorage
-    const savedDiagnostics = JSON.parse(localStorage.getItem('savedDiagnostics') || '[]');
+    const savedDiagnostics = [];
+    const q = query(collection(db, "datas"));
     const displayElement = document.getElementById('saved-diagnostics');  // Élément où afficher les diagnostics
     
-    if (savedDiagnostics.length === 0) {
-        displayElement.innerHTML = '<p>Aucun diagnostic sauvegardé.</p>';  // Message si aucun diagnostic sauvegardé
-    } else {
-        // Créer un formulaire temporaire pour récupérer les labels des champs
-        const tempForm = document.createElement('form');
-        tempForm.innerHTML = `
-            <input type="text" name="denomination" data-label="Dénomination">
-            <input type="text" name="modele" data-label="Modèle">
-            <input type="number" name="puissance" data-label="Puissance (kW)">
-            <select name="type-gaz" data-label="Type de gaz"></select>
-            <input type="number" name="poids-gaz" data-label="Quantité gaz (kg)">            
-            <input type="text" name="emplacement" data-label="Emplacement">
-            <input type="number" name="temp-ambiante" data-label="Température ambiante intérieure">
-            <input type="number" name="temp-exterieure" data-label="Température extérieure">
-            <input type="number" name="evap-air-in" data-label="Entrée évaporateur (air)">
-            <input type="number" name="evap-air-out" data-label="Sortie évaporateur (air)">
-            <input type="number" name="cond-air-in" data-label="Entrée condenseur (air)">
-            <input type="number" name="cond-air-out" data-label="Sortie condenseur (air)">
-            <input type="number" name="evap-pipe-out" data-label="Sortie évaporateur (tuyau)">
-            <input type="number" name="cond-pipe-out" data-label="Sortie condenseur (tuyau)">
-            <input type="number" name="comp-discharge" data-label="Refoulement compresseur">
-            <input type="number" name="bp-off" data-label="Pression BP à l'arrêt">
-            <input type="number" name="bp-on" data-label="Pression BP en fonctionnement">
-            <input type="number" name="hp-on" data-label="Pression HP en fonctionnement">
-            <input type="number" name="hp-off" data-label="Pression HP à l'arrêt">
-            <input type="number" name="bp-temp" data-label="Température BP">
-            <input type="number" name="hp-temp" data-label="Température HP">
-            <input type="number" name="amp-demarrage" data-label="Ampérage au démarrage">
-            <input type="number" name="amp-fonctionnement" data-label="Ampérage en fonctionnement">
-            <input type="file" name="photo-unite" data-label="Unité complète">
-            <input type="file" name="photo-evaporateur" data-label="Évaporateur">
-            <input type="file" name="photo-condenseur" data-label="Condenseur">
-            <input type="file" name="photo-compresseur" data-label="Compresseur">
-            <input type="file" name="photo-plaque-interieure" data-label="Plaque signalétique unité intérieure">
-            <input type="file" name="photo-plaque-exterieure" data-label="Plaque signalétique unité extérieure">
-        `;
-        document.body.appendChild(tempForm);  // Ajouter le formulaire temporaire au DOM
+    onSnapshot(q, (querySnapshot) => {
+        displayElement.innerHTML = '';
+        if (querySnapshot.empty) {
+            displayElement.innerHTML = '<p>Aucun diagnostic sauvegardé.</p>';
+        } else {
+            // Créer un formulaire temporaire pour récupérer les labels des champs
+            const tempForm = document.createElement('form');
+            tempForm.innerHTML = `
+                <input type="text" name="denomination" data-label="Dénomination">
+                <input type="text" name="modele" data-label="Modèle">
+                <input type="number" name="puissance" data-label="Puissance (kW)">
+                <select name="type-gaz" data-label="Type de gaz"></select>
+                <input type="number" name="poids-gaz" data-label="Quantité gaz (kg)">            
+                <input type="text" name="emplacement" data-label="Emplacement">
+                <input type="number" name="temp-ambiante" data-label="Température ambiante intérieure">
+                <input type="number" name="temp-exterieure" data-label="Température extérieure">
+                <input type="number" name="evap-air-in" data-label="Entrée évaporateur (air)">
+                <input type="number" name="evap-air-out" data-label="Sortie évaporateur (air)">
+                <input type="number" name="cond-air-in" data-label="Entrée condenseur (air)">
+                <input type="number" name="cond-air-out" data-label="Sortie condenseur (air)">
+                <input type="number" name="evap-pipe-out" data-label="Sortie évaporateur (tuyau)">
+                <input type="number" name="cond-pipe-out" data-label="Sortie condenseur (tuyau)">
+                <input type="number" name="comp-discharge" data-label="Refoulement compresseur">
+                <input type="number" name="bp-off" data-label="Pression BP à l'arrêt">
+                <input type="number" name="bp-on" data-label="Pression BP en fonctionnement">
+                <input type="number" name="hp-on" data-label="Pression HP en fonctionnement">
+                <input type="number" name="hp-off" data-label="Pression HP à l'arrêt">
+                <input type="number" name="bp-temp" data-label="Température BP">
+                <input type="number" name="hp-temp" data-label="Température HP">
+                <input type="number" name="amp-demarrage" data-label="Ampérage au démarrage">
+                <input type="number" name="amp-fonctionnement" data-label="Ampérage en fonctionnement">
+                <input type="file" name="photo-unite" data-label="Unité complète">
+                <input type="file" name="photo-evaporateur" data-label="Évaporateur">
+                <input type="file" name="photo-condenseur" data-label="Condenseur">
+                <input type="file" name="photo-compresseur" data-label="Compresseur">
+                <input type="file" name="photo-plaque-interieure" data-label="Plaque signalétique unité intérieure">
+                <input type="file" name="photo-plaque-exterieure" data-label="Plaque signalétique unité extérieure">
+            `;
+            document.body.appendChild(tempForm);  // Ajouter le formulaire temporaire au DOM
 
-        // Parcourir les diagnostics sauvegardés et les afficher
-        savedDiagnostics.forEach((data, index) => {
-            const section = document.createElement('div');
-            section.className = 'section';
-            section.innerHTML = `<h2>${data.fullName}</h2>`;
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                savedDiagnostics.push(data);
 
-            const table = document.createElement('table');
-            table.className = 'diagnostic-table';
-            const tbody = document.createElement('tbody');
+                const section = document.createElement('div');
+                section.className = 'section';
+                section.innerHTML = `<h2>${data.fullName}</h2>`;
 
-            // Parcourir les champs de données et les afficher dans une table
-            for (const key in data) {
-                if (key !== 'fullName') {
-                    const tr = document.createElement('tr');
-                    const tdLabel = document.createElement('td');
-                    const tdValue = document.createElement('td');
+                const table = document.createElement('table');
+                table.className = 'diagnostic-table';
+                const tbody = document.createElement('tbody');
 
-                    // Récupérer le label du champ
-                    const labelElement = tempForm.querySelector(`[name="${key}"]`);
-                    const label = labelElement ? labelElement.getAttribute('data-label') : key;
+                // Parcourir les champs de données et les afficher dans une table
+                for (const key in data) {
+                    if (key !== 'fullName') {
+                        const tr = document.createElement('tr');
+                        const tdLabel = document.createElement('td');
+                        const tdValue = document.createElement('td');
 
-                    tdLabel.textContent = label;
-                    tdLabel.className = 'diagnostic-label';
+                        // Récupérer le label du champ
+                        const labelElement = tempForm.querySelector(`[name="${key}"]`);
+                        const label = labelElement ? labelElement.getAttribute('data-label') : key;
 
-                    // Si le champ est une photo, afficher l'image
-                    if (key.startsWith('photo-')) {
-                        const img = document.createElement('img');
-                        img.src = data[key];
-                        img.style.maxWidth = '200px';
-                        tdValue.appendChild(img);
-                    } else {
-                        // Sinon, afficher la valeur du champ
-                        tdValue.textContent = data[key];
+                        tdLabel.textContent = label;
+                        tdLabel.className = 'diagnostic-label';
+
+                        // Si le champ est une photo, afficher l'image
+                        if (key.startsWith('photo-')) {
+                            const img = document.createElement('img');
+                            img.src = data[key];
+                            img.style.maxWidth = '200px';
+                            tdValue.appendChild(img);
+                        } else {
+                            // Sinon, afficher la valeur du champ
+                            tdValue.textContent = data[key];
+                        }
+
+                        tr.appendChild(tdLabel);
+                        tr.appendChild(tdValue);
+                        tbody.appendChild(tr);
                     }
-
-                    tr.appendChild(tdLabel);
-                    tr.appendChild(tdValue);
-                    tbody.appendChild(tr);
                 }
-            }
-            table.appendChild(tbody);
-            section.appendChild(table);
+                table.appendChild(tbody);
+                section.appendChild(table);
 
-            // Ajouter un bouton de suppression pour chaque diagnostic
-            const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Supprimer';
-            deleteButton.className = 'delete-button';
-            deleteButton.addEventListener('click', function() {
-                // Supprimer le diagnostic du tableau et du localStorage
-                savedDiagnostics.splice(index, 1);
-                localStorage.setItem('savedDiagnostics', JSON.stringify(savedDiagnostics));
-                location.reload();  // Recharger la page pour mettre à jour l'affichage
+                // Ajouter un bouton de suppression pour chaque diagnostic
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Supprimer';
+                deleteButton.className = 'delete-button';
+                deleteButton.addEventListener('click', async function() {
+                    // Supprimer le diagnostic de Firestore
+                    await deleteDoc(doc.ref);
+                    location.reload();  // Recharger la page pour mettre à jour l'affichage
+                });
+                section.appendChild(deleteButton);
+
+                displayElement.appendChild(section);
             });
-            section.appendChild(deleteButton);
 
-            displayElement.appendChild(section);
-        });
-
-        tempForm.remove();  // Supprimer le formulaire temporaire du DOM
-    }
+            tempForm.remove();  // Supprimer le formulaire temporaire du DOM
+        }
+    });
 }
