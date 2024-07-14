@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* Général */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -167,3 +168,174 @@ img {
     padding: 0;
     font-size: 14px;
 }
+=======
+/* Général */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #343a40;
+}
+
+/* En-tête */
+header {
+    background-color: #007bff;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 4px solid #0056b3;
+}
+
+/* Navigation */
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #343a40;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 10px;
+}
+
+nav ul li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+nav ul li a:hover {
+    background-color: #495057;
+}
+
+/* Conteneur principal */
+.container {
+    padding: 20px;
+}
+
+/* Sections de formulaire et de diagnostic */
+.section {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.section h2 {
+    margin-top: 0;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    color: #007bff;
+}
+
+/* Table de diagnostic */
+.diagnostic-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.diagnostic-table th,
+.diagnostic-table td {
+    padding: 10px;
+    border: 1px solid #dee2e6;
+}
+
+.diagnostic-table th {
+    background-color: #007bff;
+    color: white;
+    text-align: left;
+}
+
+.diagnostic-label {
+    font-weight: bold;
+    background-color: #f1f1f1;
+}
+
+/* Boutons de suppression */
+.delete-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 20px 0 0;
+    border: none;
+    border-radius: 4px;
+    background-color: #dc3545;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+/* Étiquettes de formulaire */
+form label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+/* Champs de formulaire */
+form input, form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+form input:focus, form select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+/* Boutons de formulaire */
+form button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 5px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+/* Images */
+img {
+    max-width: 200px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    margin-top: 10px;
+    display: block;
+}
+
+#saved-diagnostics .section img {
+    display: inline;
+    margin: 10px;
+}
+
+#saved-diagnostics .section p {
+    margin: 10px 0;
+    padding: 0;
+    font-size: 14px;
+}
+>>>>>>> 52de1bc0f2be5d038944b3a6112f87ac53c64c6f

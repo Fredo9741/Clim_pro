@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -14,7 +15,7 @@
     <!-- En-tête de la page -->
     <header>
         <h1>Clim-Pro</h1>
-        <p>Relevés Bravo tu as reussi</p>
+        <p>Relevés de températures</p>
     </header>
 
     <!-- Barre de navigation -->
@@ -32,12 +33,16 @@
             <!-- Section pour les informations générales -->
             <div class="section">
                 <h2>Informations générales</h2>
+                <!-- Champ pour la dénomination -->
                 <label for="denomination">Dénomination :</label>
                 <input type="text" id="denomination" name="denomination" data-label="Dénomination" required>
+                <!-- Champ pour le modèle -->
                 <label for="modele">Modèle :</label>
                 <input type="text" id="modele" name="modele" data-label="Modèle" required>
+                <!-- Champ pour la puissance -->
                 <label for="puissance">Puissance (Btu) :</label>
                 <input type="number" id="puissance" name="puissance" step="0.1" data-label="Puissance (Btu)" required>
+                <!-- Champ pour le type de gaz -->
                 <label for="type-gaz">Type de gaz :</label>
                 <select id="type-gaz" name="type-gaz" data-label="Type de gaz" required>
                     <option value="">Sélectionner</option>
@@ -47,8 +52,189 @@
                     <option value="R407C">R407C</option>
                     <option value="R134a">R134a</option>
                 </select>
+                <!-- Champ pour la quantité de gaz -->
                 <label for="poids-gaz">Quantité de gaz :</label>
                 <input type="number" id="poids-gaz" name="poids-gaz" step="0.1" data-label="Quantité gaz (kg)" required>                
+                
+                <!-- Champ pour l'emplacement -->
+                <label for="emplacement">Emplacement :</label>
+                <input type="text" id="emplacement" name="emplacement" data-label="Emplacement" required>
+            </div>
+
+            <!-- Section pour les températures de l'air -->
+            <div class="section">
+                <h2>Températures de l'air (°C)</h2>
+                <label for="temp-ambiante">Température ambiante intérieure :</label>
+                <input type="number" id="temp-ambiante" name="temp-ambiante" step="0.1" data-label="Température ambiante intérieure" required>
+                <label for="temp-exterieure">Température extérieure :</label>
+                <input type="number" id="temp-exterieure" name="temp-exterieure" step="0.1" data-label="Température extérieure" required>
+                <label for="evap-air-in">Entrée évaporateur (air) :</label>
+                <input type="number" id="evap-air-in" name="evap-air-in" step="0.1" data-label="Entrée évaporateur (air)" required>
+                <label for="evap-air-out">Sortie évaporateur (air) :</label>
+                <input type="number" id="evap-air-out" name="evap-air-out" step="0.1" data-label="Sortie évaporateur (air)" required>
+                <label for="cond-air-in">Entrée condenseur (air) :</label>
+                <input type="number" id="cond-air-in" name="cond-air-in" step="0.1" data-label="Entrée condenseur (air)" required>
+                <label for="cond-air-out">Sortie condenseur (air) :</label>
+                <input type="number" id="cond-air-out" name="cond-air-out" step="0.1" data-label="Sortie condenseur (air)" required>
+            </div>
+
+            <!-- Section pour les températures des tuyauteries -->
+            <div class="section">
+                <h2>Températures des tuyauteries (°C)</h2>
+                <label for="evap-pipe-out">Sortie évaporateur (tuyau) :</label>
+                <input type="number" id="evap-pipe-out" name="evap-pipe-out" step="0.1" data-label="Sortie évaporateur (tuyau)" required>
+                <label for="cond-pipe-out">Sortie condenseur (tuyau) :</label>
+                <input type="number" id="cond-pipe-out" name="cond-pipe-out" step="0.1" data-label="Sortie condenseur (tuyau)" required>
+                <label for="comp-discharge">Refoulement compresseur :</label>
+                <input type="number" id="comp-discharge" name="comp-discharge" step="0.1" data-label="Refoulement compresseur" required>
+            </div>
+
+            <!-- Section pour les pressions -->
+            <div class="section">
+                <h2>Pressions (bar)</h2>
+                <label for="bp-off">Pression BP à l'arrêt :</label>
+                <input type="number" id="bp-off" name="bp-off" step="0.1" data-label="Pression BP à l'arrêt" required>
+                <label for="bp-on">Pression BP en fonctionnement :</label>
+                <input type="number" id="bp-on" name="bp-on" step="0.1" data-label="Pression BP en fonctionnement" required>
+                <label for="hp-on">Pression HP en fonctionnement :</label>
+                <input type="number" id="hp-on" name="hp-on" step="0.1" data-label="Pression HP en fonctionnement" required>
+                <label for="hp-off">Pression HP à l'arrêt :</label>
+                <input type="number" id="hp-off" name="hp-off" step="0.1" data-label="Pression HP à l'arrêt" required>
+            </div>
+
+            <!-- Section pour les températures lues sur le manomètre -->
+            <div class="section">
+                <h2>Températures lues sur le manomètre (°C)</h2>
+                <label for="bp-temp">Température BP :</label>
+                <input type="number" id="bp-temp" name="bp-temp" step="0.1" data-label="Température BP" required>
+                <label for="hp-temp">Température HP :</label>
+                <input type="number" id="hp-temp" name="hp-temp" step="0.1" data-label="Température HP" required>
+            </div>
+
+            <!-- Section pour les mesures électriques -->
+            <div class="section">
+                <h2>Mesures électriques (A)</h2>
+                <label for="amp-demarrage">Ampérage au démarrage :</label>
+                <input type="number" id="amp-demarrage" name="amp-demarrage" step="0.1" data-label="Ampérage au démarrage" required>
+                <label for="amp-fonctionnement">Ampérage en fonctionnement :</label>
+                <input type="number" id="amp-fonctionnement" name="amp-fonctionnement" step="0.1" data-label="Ampérage en fonctionnement" required>
+            </div>
+
+            <!-- Section pour les photos du système -->
+            <div class="section">
+                <h2>Photos du système</h2>
+                <div class="photo-upload">
+                    <label for="photo-unite">Unité complète :</label>
+                    <input type="file" id="photo-unite" name="photo-unite" accept="image/*" capture="environment" onchange="previewImage(this);">
+                    <img id="preview-photo-unite" style="display:none;" height="200"/>
+                </div>
+                <div class="photo-upload">
+                    <label for="photo-evaporateur">Évaporateur :</label>
+                    <input type="file" id="photo-evaporateur" name="photo-evaporateur" accept="image/*" capture="environment" onchange="previewImage(this);">
+                    <img id="preview-photo-evaporateur" style="display:none;" height="200"/>
+                </div>
+                <div class="photo-upload">
+                    <label for="photo-condenseur">Condenseur :</label>
+                    <input type="file" id="photo-condenseur" name="photo-condenseur" accept="image/*" capture="environment" onchange="previewImage(this);">
+                    <img id="preview-photo-condenseur" style="display:none;" height="200"/>
+                </div>
+                <div class="photo-upload">
+                    <label for="photo-compresseur">Compresseur :</label>
+                    <input type="file" id="photo-compresseur" name="photo-compresseur" accept="image/*" capture="environment" onchange="previewImage(this);">
+                    <img id="preview-photo-compresseur" style="display:none;" height="200"/>
+                </div>
+                <div class="photo-upload">
+                    <label for="photo-plaque-interieure">Plaque signalétique unité intérieure :</label>
+                    <input type="file" id="photo-plaque-interieure" name="photo-plaque-interieure" accept="image/*" capture="environment" onchange="previewImage(this);">
+                    <img id="preview-photo-plaque-interieure" style="display:none;" height="200"/>
+                </div>
+                <div class="photo-upload">
+                    <label for="photo-plaque-exterieure">Plaque signalétique unité extérieure :</label>
+                    <input type="file" id="photo-plaque-exterieure" name="photo-plaque-exterieure" accept="image/*" capture="environment" onchange="previewImage(this);">
+                    <img id="preview-photo-plaque-exterieure" style="display:none;" height="200"/>
+                </div>
+            </div>
+            
+            </div>
+
+            <!-- Bouton de sauvegarde -->
+            <button type="button" id="save-button">Sauvegarder</button>
+            <!-- Bouton voir relevés sauvegardé -->
+            <a href="diagnostics-sauvegardes.html" id="save-button">
+            <button type="button">Voir les relevés</button>
+            </a>
+
+        </form>
+    </main>
+
+    <!-- Pied de page -->
+    <footer class="container">
+        <small><a href="#">Conditions d'utilisation</a> • <a href="#">Politique de confidentialité</a></small>
+    </footer>
+
+    <!-- Inclusion du fichier JavaScript -->
+    <script src="scripts.js"></script>
+</body>
+</html>
+=======
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <!-- Meta tags pour l'encodage des caractères et la configuration responsive -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Titre de la page -->
+    <title>Clim-pro</title>
+    <!-- Liens vers les fichiers CSS externes -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- En-tête de la page -->
+    <header>
+        <h1>Clim-Pro</h1>
+        <p>Relevés de températures</p>
+    </header>
+
+    <!-- Barre de navigation -->
+    <nav>
+        <ul>
+            <li><a href="index.html">Acceuil</a></li>
+            <li><a href="diagnostics-sauvegardes.html">Relevés Sauvegardés</a></li>
+        </ul>
+    </nav>
+
+    <!-- Conteneur principal -->
+    <main class="container">
+        <!-- Formulaire de diagnostic -->
+        <form id="diagnostic-form">
+            <!-- Section pour les informations générales -->
+            <div class="section">
+                <h2>Informations générales</h2>
+                <!-- Champ pour la dénomination -->
+                <label for="denomination">Dénomination :</label>
+                <input type="text" id="denomination" name="denomination" data-label="Dénomination" required>
+                <!-- Champ pour le modèle -->
+                <label for="modele">Modèle :</label>
+                <input type="text" id="modele" name="modele" data-label="Modèle" required>
+                <!-- Champ pour la puissance -->
+                <label for="puissance">Puissance (Btu) :</label>
+                <input type="number" id="puissance" name="puissance" step="0.1" data-label="Puissance (Btu)" required>
+                <!-- Champ pour le type de gaz -->
+                <label for="type-gaz">Type de gaz :</label>
+                <select id="type-gaz" name="type-gaz" data-label="Type de gaz" required>
+                    <option value="">Sélectionner</option>
+                    <option value="R410A">R410A</option>
+                    <option value="R32">R32</option>
+                    <option value="R22">R22</option>
+                    <option value="R407C">R407C</option>
+                    <option value="R134a">R134a</option>
+                </select>
+                <!-- Champ pour la quantité de gaz -->
+                <label for="poids-gaz">Quantité de gaz :</label>
+                <input type="number" id="poids-gaz" name="poids-gaz" step="0.1" data-label="Quantité gaz (kg)" required>                
+                
+                <!-- Champ pour l'emplacement -->
                 <label for="emplacement">Emplacement :</label>
                 <input type="text" id="emplacement" name="emplacement" data-label="Emplacement" required>
             </div>
@@ -157,6 +343,7 @@
     </footer>
 
     <!-- Inclusion du fichier JavaScript -->
-    <script type="module" src="scripts.js"></script>
+    <script src="scripts.js"></script>
 </body>
 </html>
+>>>>>>> 52de1bc0f2be5d038944b3a6112f87ac53c64c6f
